@@ -4,6 +4,9 @@
 In Progress:
  - ~~Chip8 ROM dissassembler~~
  - Building CPU
+   - ~~0x0000~~
+   - ~~0x1000~~
+   - ~~0x2000~~
   
   
 # Useful Links
