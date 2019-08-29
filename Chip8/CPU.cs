@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace Chip8
 {
@@ -30,7 +31,7 @@ namespace Chip8
 
         public void opCodesExecution(ushort opcode)
         {
-            ushort nibble = (ushort)(opcode & 0xF000);
+            ushort nibble = (ushort)(opcode & 0xF000); //To get the first byte of the opcode
 
             switch(nibble)
             {
@@ -40,6 +41,7 @@ namespace Chip8
                         for (int i = 0; i < Display.Length; i++)
                         {
                             Display[i] = 0;
+                            Debug.Write("\nScreen cleared "+ opcode.ToString("X4"));
                         }
                     }
                     else if(opcode == 0x00ee)
@@ -48,9 +50,23 @@ namespace Chip8
                     }
                     else
                     {
-                        throw new Exception("Opcpde note supported "+opcode.ToString("X4"));
+                        throw new Exception("Opcode not supported "+opcode.ToString("X4"));
                     }
                     break;
+                case 0x1000:
+                    var address = (ushort)(opcode & 0x0FFF);//To get the last 12 bits or 3 bytes
+                    I = address;
+                    Debug.Write("Jumps to address " + address);
+                    break;
+                case 0x2000:
+                    stack.Push(I);
+                    I= (ushort)(opcode & 0x0FFF);//To get the last 12 bits or 3 bytes
+                    break;
+                case 0X3000:
+
+
+                    break;
+
                 default:
                     throw new Exception($"Opcode not supported " + opcode.ToString("X4"));
 

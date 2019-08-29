@@ -9,7 +9,7 @@ namespace Chip8
         {
 
             CPU cpu = new CPU();
-            using (BinaryReader reader = new BinaryReader(new FileStream(@"C:\Users\OEM\Desktop\Ch8\IBM Logo.ch8", FileMode.Open)))
+            using (BinaryReader reader = new BinaryReader(new FileStream(@"C:\Users\santh\source\repos\CHIP8-Emulator\Chip8\IBM Logo.ch8", FileMode.Open)))
             {
                 while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
