@@ -1,9 +1,10 @@
 # CHIP8-Emulator
 
-Chip 8 rom disassembler
 
-On Progress:
-  Building CPU
+In Progress:
+ - ~~Chip8 ROM dissassembler~~
+ - Building CPU
+  
   
 # Useful Links
 - https://en.wikipedia.org/wiki/CHIP-8
