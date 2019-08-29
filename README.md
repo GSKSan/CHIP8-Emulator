@@ -12,3 +12,4 @@ In Progress:
 # Useful Links
 - https://en.wikipedia.org/wiki/CHIP-8
 - http://devernay.free.fr/hacks/chip8/C8TECH10.HTM#00E0
+- https://help.github.com/en/articles/basic-writing-and-formatting-syntax
