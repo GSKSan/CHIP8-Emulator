@@ -127,6 +127,18 @@ namespace Chip8
                         case 3:
                             registers[x] = (byte)(registers[x] ^ registers[y]);
                             break;
+                        case 4:
+                            registers[15] = (byte)(registers[x] + registers[y] > 255 ? 1 : 0);
+                            registers[x] =(byte)(( registers[x] + registers[y])&0x00FF);
+                            break;
+                        case 5:
+                            registers[15] = (byte)(registers[x] > registers[y] ? 0 : 1);
+                            registers[x] = (byte)(registers[x] - registers[y]);
+                            break;
+                        case 6:
+                            registers[15] = (byte)(registers[x] & 0x0001);
+                            registers[x] =(byte)( registers[x] >> 1);
+                            break;
 
 
 
