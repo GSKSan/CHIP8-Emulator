@@ -31,6 +31,9 @@ namespace Chip8
         //Display
         public byte[] Display = new byte[64 * 32];
 
+        //Random gen
+        public Random generator = new Random(Environment.TickCount);
+
         public void opCodesExecution(ushort opcode)
         {
             ushort nibble = (ushort)(opcode & 0xF000); //To get the first byte of the opcode
@@ -132,18 +135,52 @@ namespace Chip8
                             registers[x] =(byte)(( registers[x] + registers[y])&0x00FF);
                             break;
                         case 5:
-                            registers[15] = (byte)(registers[x] > registers[y] ? 0 : 1);
+                            registers[15] = (byte)(registers[x] > registers[y] ? 1 : 0);
                             registers[x] = (byte)(registers[x] - registers[y]);
                             break;
                         case 6:
                             registers[15] = (byte)(registers[x] & 0x0001);
                             registers[x] =(byte)( registers[x] >> 1);
                             break;
+                        case 7:
+                            registers[15] = (byte)(registers[y] > registers[x] ? 1 : 0);
+                            registers[x] = (byte)(registers[x] - registers[y]);
+                            break;
+                        case 14:
+                            registers[15]=(byte)((registers[x]& 0x80) == 0x80 ? 1:0);
+                            registers[x] = (byte)(registers[x] << 1);
+                            break;
+
 
 
 
                     }
-                    break;  
+
+                    break;
+                case 0x9000:
+                    x = (opcode & 0x0F00) >> 8;
+                    y = (opcode & 0x00F0) >> 4;
+                    if (registers[x] != registers[y])
+                    {
+
+                        I += 2;
+                    }
+                    break;
+                case 0xA000:
+                    var nnn = (byte)(opcode & 0x0fff);
+                    I = nnn;
+                    break;
+                case 0xB000:
+                    nnn = (byte)(opcode & 0x0fff);
+                    I = (byte)(nnn + registers[0]);
+                    break;
+                case 0xC000:
+                    x = (opcode & 0x0F00) >> 8;
+                    var rand_byte = (byte)(generator.Next() & (opcode & 0x00ff));
+                    registers[x] = rand_byte;
+                    break;
+                case 0xD000;
+
                 default:
                     throw new Exception($"Opcode not supported " + opcode.ToString("X4"));
 

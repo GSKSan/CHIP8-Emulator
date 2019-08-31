@@ -7,8 +7,8 @@ namespace Chip8
     {
         static void Main(string[] args)
         {
-            var nib = (0x3c00 & 0x0F00);
-            Console.WriteLine(nib.ToString("X"));
+            var nib = (byte)(229 & 0x80);
+            Console.WriteLine(nib.ToString("X2"));
             CPU cpu = new CPU();
             using (BinaryReader reader = new BinaryReader(new FileStream(@"C:\Users\OEM\Desktop\Ch8\IBM Logo.ch8", FileMode.Open)))
             {
