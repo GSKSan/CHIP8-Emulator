@@ -15,7 +15,7 @@ namespace Chip8.Tests
         {
             var chip = new CPU();
             ushort clrScrOpcode = 0x00e0;
-            chip.opCodesExecution(clrScrOpcode);
+           // chip.opCodesExecution(clrScrOpcode);
             Assert.Fail();
             
 
