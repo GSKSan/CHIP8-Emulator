@@ -11,12 +11,12 @@ namespace Chip8
             var nib = (byte)(229 & 0x80);
             //Console.WriteLine(nib.ToString("X2"));
             CPU cpu = new CPU();
-            List<ushort> program = new List<ushort>();
+            List<byte> program = new List<byte>();
             using (BinaryReader reader = new BinaryReader(new FileStream(@"C:\Users\OEM\Desktop\Ch8\heart.ch8", FileMode.Open)))
             {
                 while (reader.BaseStream.Position < reader.BaseStream.Length-1)
                 {
-                    program.Add((ushort) (reader.ReadByte() << 8 | reader.ReadByte()));
+                    program.Add(reader.ReadByte());
 
                     // Console.WriteLine(opcode.ToString("X4"));
                    
@@ -37,6 +37,7 @@ namespace Chip8
                 try
                 {
                     cpu.opCodesExecution();
+                    cpu.DisplayConsole();
                 }
                 catch (Exception ex)
                 {

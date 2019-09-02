@@ -40,12 +40,12 @@ namespace Chip8
 
         //Program
         public ushort[] Program;
-        public void LoadProgram(ushort[] program)
+        public void LoadProgram(byte[] program)
         {
             for (int i = 0; i < program.Length; i++)
             {
-                memory[512 + i * 2] = (byte)((program[i] & 0xff00)>>8);
-                memory[513 + i * 2] = (byte)(program[i] & 0x00ff);
+                memory[512 + i] = program[i];
+               
             }
             PC = 512;
             //opCodesExecution();
@@ -191,8 +191,8 @@ namespace Chip8
                     }
                     break;
                 case 0xA000:
-                    var nnn = (byte)(opcode & 0x0fff);
-                    I = nnn;
+                    var nnn = (opcode & 0x0fff);
+                    I =(ushort) nnn;
                     break;
                 case 0xB000:
                     nnn = (byte)(opcode & 0x0fff);
@@ -212,7 +212,7 @@ namespace Chip8
 
                     for (int i = 0; i < n; i++)
                     {
-                        byte mem = memory[I + i];
+                        byte mem = memory[I+i];
 
                         for (int j = 0; j < 8; j++)
                         {
@@ -221,9 +221,9 @@ namespace Chip8
 
                             if (index > 2047) continue;
 
-                            if (pixel == 1 && Display[index] != 0) registers[15] = 1;
+                            if (pixel == 1 && Display[index] == 1) registers[15] = 1;
 
-                            Display[index] =(byte)( (Display[index] != 0 && pixel == 0) || (Display[index] == 0 && pixel == 1) ? 0xffffffff : 0);//(byte)(Display[index] ^ pixel);
+                            Display[index] =(byte)(Display[index] ^ pixel);
                         }
                     }
                     break;
@@ -301,6 +301,28 @@ namespace Chip8
                     throw new Exception($"Opcode not supported " + opcode.ToString("X4"));
 
             }
+        }
+        public void DisplayConsole()
+        {
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
+            for (int y = 0; y < 32; y++)
+            {
+                for (int x = 0; x < 64; x++)
+                {
+                    if (Display[x + y * 64] != 0)
+                    {
+                        Console.Write("*");
+
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
+                }
+                Console.WriteLine();
+            }
+            //Console.ReadKey();
         }
 
 
